@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/forms?useSSL=false
+    username: root
+    password: root
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+#      ddl-auto: create-drop
+      ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: forms.notification.sender@gmail.com
+    password: TY4E5s6oGSPPI0DNE4Uk
+    properties.mail.smtp:
+            auth: true
+            starttls.enable: true

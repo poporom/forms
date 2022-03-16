@@ -1,0 +1,54 @@
+<div ng-if="!sdc.initError" class="row">
+  <div class="col-md-offset-2 col-md-8">
+    <form class="form-horizontal">
+      <div align="center" class="form-group">
+        <h3>{{sdc.survey.name}}</h3>
+      </div>
+      <div align="center" class="form-group">
+        <h4>{{sdc.survey.description}}</h4>
+      </div>
+      
+      <div ng-repeat="question in sdc.survey.questions track by $index" ng-init="questionIndex = $index">
+        <div class="form-group">
+          <label for="question{{questionIndex + 1}}"> {{questionIndex + 1}}. {{question.content}}</label>
+
+          <div ng-if="question.questionType === 1">
+            <div class="radio" ng-repeat="answer in question.answers track by $index">
+              <label>
+                <input type="radio" disabled> {{answer.content}}
+              </label>
+            </div>
+
+            <div ng-if="question.hasOtherOption" class="radio">
+              <label>
+                <input type="radio" disabled> Other</label>
+              <input type="text" class="form-control" placeholder="Please provide your option..." readonly>
+            </div>
+          </div>
+
+          <div ng-if="question.questionType === 2">
+            <input type="text" class="form-control" placeholder="Please provide your answer..." readonly>
+          </div>
+
+          <div ng-if="question.questionType === 3">
+            <div class="checkbox" ng-repeat="answer in question.answers track by $index">
+              <label>
+                <input type="checkbox" disabled> {{answer.content}}
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <hr ng-if="!$last">
+      </div> 
+
+      <div align="center" class="form-group">
+        <h4>{{sdc.survey.exitMessage}}</h4>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="alert alert-danger" role="alert" ng-if="sdc.initError">
+  <strong>Error:</strong> {{sdc.initError}}
+</div>

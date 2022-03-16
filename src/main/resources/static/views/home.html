@@ -1,0 +1,111 @@
+<div ng-if="!hc.initError" class="row">
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <h3>Your surveys <a class="btn btn-primary btn-success btn-md pull-right" href="#/survey/new" role="button" title="Create a new survey"><span class="glyphicon glyphicon-plus"></span> New Survey</a></h3>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="survey in hc.surveys track by $index" class="table-animate" ng-class="{danger: survey.isFlagged}">
+          <td>
+            <strong>{{survey.name}}</strong>
+            <br><i>{{survey.creationDate | date:'mediumDate'}}</i><span ng-if="survey.expirationDate"> - <i>{{survey.expirationDate | date:'mediumDate'}}</i></span>
+          </td>
+          <td>
+            <div class="btn-group pull-right" role="group" aria-label="...">
+
+              <a href="#/survey/results/{{survey.hashedId}}" class="btn btn-primary" role="button" title="Show the results">
+                <span class="glyphicon glyphicon-stats"></span>
+              </a>
+
+              <a href="#/survey/details/{{survey.hashedId}}" class="btn btn-primary" role="button" title="Show more details">
+                <span class="glyphicon glyphicon-list"></span>
+              </a>
+
+              <button ng-if="survey.isActive" class="btn btn-primary" type="button" data-toggle="modal" data-target="#togglePrivacyModal" ng-click="hc.setCurrentSurvey(survey)" title="Toggle survey privacy">
+                <span ng-if="!survey.isPublic" class="glyphicon glyphicon-eye-open"></span>
+                <span ng-if="survey.isPublic" class="glyphicon glyphicon-eye-close"></span>
+              </button>
+
+              <button ng-if="survey.isActive" class="btn btn-primary" type="button" data-toggle="modal" data-target="#deactivateSurveyModal" ng-click="hc.setCurrentSurvey(survey)" title="Deactivate the survey">
+                <span class="glyphicon glyphicon-off"></span>
+              </button>
+
+              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#deleteSurveyModal" ng-click="hc.setCurrentSurvey(survey)" title="Delete the survey">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </div>  
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-info" role="alert" ng-if="hc.surveys.length === 0">
+      <strong>Info:</strong> You have no surveys!
+    </div>
+  </div>
+
+  <div class="alert alert-danger alert-dismissible" role="alert" ng-if="hc.error">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="hc.error = ''"><span aria-hidden="true">&times;</span></button>
+    <strong>Error:</strong> {{hc.error}}
+  </div>
+</div>
+
+<div class="alert alert-danger" role="alert" ng-if="hc.initError">
+  <strong>Error:</strong> {{hc.initError}}
+</div>
+
+<div class="modal fade" id="deleteSurveyModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        <label>Are you sure you want to delete your survey?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary btn-sm" ng-click="hc.deleteSurvey()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deactivateSurveyModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        <label>Are you sure you want to deactivate your survey?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="hc.deactivateSurvey()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="togglePrivacyModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        <label>Are you sure you want to make your survey available{{hc.currentSurvey.isPublic ? ' only to registered users' : ' to everyone'}}?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary btn-sm" data-dismiss="modal" ng-click="hc.toggleSurveyPrivacy()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

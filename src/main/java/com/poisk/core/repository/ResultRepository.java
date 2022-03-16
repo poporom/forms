@@ -1,0 +1,14 @@
+package com.poisk.core.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import com.poisk.core.model.SurveyResult;
+
+@Repository
+public interface ResultRepository extends JpaRepository<SurveyResult, Integer> {
+	
+	List<SurveyResult> findBySurveyId(Integer surveyId);
+
+}

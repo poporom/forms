@@ -1,0 +1,39 @@
+body {
+  padding-top: 87px;
+  padding-bottom: 87px;
+}
+
+.breadcrumb-item {
+  font-size: 15px;
+}
+
+textarea {
+  resize: none;
+}
+
+.img-nav {
+  width: 20px; 
+  height: 20px;
+}
+
+.comment-user {
+  font-size: 50px;
+}
+
+.comment-delete {
+  padding: 5px 5px 0 0;
+}
+
+.comment-date {
+  font-style: italic;
+  font-size: 80%;
+}
+
+.commnet-content {
+  font-size: 15px; 
+  margin: 0;
+}
+
+.comment-poster {
+  font-weight: bold;
+}
